@@ -6,7 +6,11 @@ public class Bootstrap : MonoBehaviour
 {
     void Start()
     {
+        ActiveCanvas.InitAll();
         BundleContainer.Init();
-        Inventory.Init();
+        ItemDrag.InitAll();
+        RandomItemCreator.InitAll();
+        ItemVoid.InitAll();
+        Inventory.InitAll();
     }
 }

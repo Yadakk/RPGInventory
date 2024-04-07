@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7932a6477185b9c42b3faeaf478db9ec, type: 3}
-  m_Name: Debris
+  m_Name: Square
   m_EditorClassIdentifier: 
-  Name: Debris cannon battery
-  Damage: 95
-  Rarity: 4
-  ItemPrefab: {fileID: 2848993733925758329, guid: 8ccc1ef10f5ba934b860279caa33bf86, type: 3}
+  Data:
+    Name: Square
+    Damage: 32
+    Rarity: 2

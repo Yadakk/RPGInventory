@@ -1,105 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using AssetBundleLib;
+using UnityEngine.Events;
 using JsonSaverLib;
+using System;
+using Unity.VisualScripting;
 using System.IO;
-using static BundleContainer;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private string _path;
+    [SerializeField] private string _savePath;
     [SerializeField] private int _slots;
-    public static List<Inventory> Instances = new();
-    public List<Item> Items;
-    public static Item Empty;
+    [SerializeField] private UnityEngine.Object _slotPrefab;
+    [SerializeField] private UnityEngine.Object _itemPrefab;
 
+    [NonSerialized] private Slot[] _slotScripts;
+
+    #region Initter
+    private static UnityEvent _initAll = new();
     private void Awake()
     {
-        Instances.Add(this);
+        _initAll.AddListener(OnInitAll);
     }
-
-    public static void Init()
+    public static void InitAll()
     {
-        Empty = AssetGetter<Item>.GetAsset(Bundle, "Empty");
-
-        foreach (var instance in Instances)
-        {
-            instance.Load();
-        }
+        _initAll.Invoke();
     }
-
-    public void UpdateInventory()
+    private void OnInitAll()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
+        _slotScripts = new Slot[_slots];
 
         for (int i = 0; i < _slots; i++)
         {
-            if (i >= Items.Count)
+            _slotScripts[i] = Instantiate(_slotPrefab, transform).GetComponent<Slot>();
+        }
+
+        Load();
+    }
+    #endregion
+
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
+
+    private void Save()
+    {
+        InventoryData invData = new(_slots);
+
+        for (int i = 0; i < _slots; i++)
+        {
+            invData.Items[i] = _slotScripts[i].ItemInside;
+        }
+        
+        Saver.Save(_savePath, invData);
+    }
+
+    private void Load()
+    {
+        if(File.Exists(_savePath))
+        {
+            InventoryData invData = Saver.Load<InventoryData>(_savePath);
+
+            for (int i = 0; i < _slots; i++)
             {
-                Items.Add(Empty);
-            }
+                if (invData.Items[i].Name != "")
+                {
+                    _slotScripts[i].GetComponent<Slot>().ItemInside = invData.Items[i];
 
-            var item = Items[i];
-            var itemGO = Instantiate(item.ItemPrefab, transform) as GameObject;
+                    var item = Instantiate(_itemPrefab, _slotScripts[i].transform) as GameObject;
+                    item.GetComponent<RectTransform>().anchoredPosition = default;
 
-            var itemImage = itemGO.GetComponent<Image>();
-            var itemName = itemGO.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            var itemDamage = itemGO.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-            var mbScript = itemGO.GetComponent<ItemMB>();
+                    var info = item.GetComponent<ItemInfo>();
+                    var drag = item.GetComponent<ItemDrag>();
 
-            switch (item.Rarity)
-            {
-                case Item.ERarity.Empty:
-                    itemImage.color = Color.white;
-                    break;
+                    info.Init();
+                    info.SetInfo(invData.Items[i]);
 
-                case Item.ERarity.Common:
-                    itemImage.color = Color.gray;
-                    break;
-
-                case Item.ERarity.Uncommon:
-                    itemImage.color = Color.green;
-                    break;
-
-                case Item.ERarity.Rare:
-                    itemImage.color = Color.cyan;
-                    break;
-
-                case Item.ERarity.Exclusive:
-                    itemImage.color = Color.red;
-                    break;
-
-                case Item.ERarity.NearlyPerfect:
-                    itemImage.color = Color.yellow;
-                    break;
-            }
-
-            if (item.Rarity != Item.ERarity.Empty)
-            {
-                itemName.text = item.Name;
-                itemDamage.text = "Dmg: " + item.Damage;
-
-                mbScript.RelatedInventory = this;
-                mbScript.RelatedPlace = i;
+                    drag.Init();
+                    drag.IsInsideSlot = true;
+                }
             }
         }
     }
 
-    public void Save()
+    private class InventoryData
     {
-        Saver.Save(_path, Items);
-    }
-    
-    public void Load() 
-    {
-        if(File.Exists(_path))
-            Items = Saver.Load<List<Item>>(_path);
-        UpdateInventory();
+        public ItemData[] Items;
+
+        public InventoryData(int slots) => Items = new ItemData[slots];
     }
 }

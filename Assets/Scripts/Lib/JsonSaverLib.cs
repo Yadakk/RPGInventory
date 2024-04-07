@@ -11,7 +11,7 @@ namespace JsonSaverLib
         public static void Save<T>(string path, T obj)
         {
             var json = ToJson(obj);
-            WriteAllText(json, path);
+            WriteAllText(path, json);
         }
 
         public static T Load<T>(string path)

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7932a6477185b9c42b3faeaf478db9ec, type: 3}
-  m_Name: Plasm
+  m_Name: Dot
   m_EditorClassIdentifier: 
-  Name: Plasm gun
-  Damage: 65
-  Rarity: 3
-  ItemPrefab: {fileID: 2848993733925758329, guid: 8ccc1ef10f5ba934b860279caa33bf86, type: 3}
+  Data:
+    Name: Dot
+    Damage: 5
+    Rarity: 0

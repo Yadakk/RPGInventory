@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace AssetBundleLib
 {
-    public static class AssetGetter<T> where T : Object
+    public static class AssetGetter
     {
-        public static T[] GetAssets(AssetBundle bundle)
+        public static T[] GetAssets<T>(AssetBundle bundle) where T : Object
         {
             T[] assets = bundle.LoadAllAssets<T>();
             return assets;
         }
 
-        public static T GetAsset(AssetBundle bundle, string name)
+        public static T GetAsset<T>(AssetBundle bundle, string name) where T : Object
         {
             T asset = bundle.LoadAsset<T>(name);
             return asset;
@@ -23,7 +23,7 @@ namespace AssetBundleLib
     {
         public static void GetFromBundle<T>(AssetBundle bundle, ref T obj) where T : Object
         {
-            obj = AssetGetter<T>.GetAsset(bundle, obj.name);
+            obj = AssetGetter.GetAsset<T>(bundle, obj.name);
         }
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7932a6477185b9c42b3faeaf478db9ec, type: 3}
-  m_Name: Slag
+  m_Name: Cube
   m_EditorClassIdentifier: 
-  Name: Slag turret
-  Damage: 73
-  Rarity: 3
-  ItemPrefab: {fileID: 2848993733925758329, guid: 8ccc1ef10f5ba934b860279caa33bf86, type: 3}
+  Data:
+    Name: Cube
+    Damage: 58
+    Rarity: 3
