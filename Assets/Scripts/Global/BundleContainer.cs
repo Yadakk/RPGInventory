@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class BundleContainer
 {
-    private static string _path = "Assets/AssetBundles/game";
+    private static string _path = Application.streamingAssetsPath + "/game";
     public static AssetBundle Bundle;
 
     public static void Init()

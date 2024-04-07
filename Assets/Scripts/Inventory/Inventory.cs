@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
 
     private void Load()
     {
-        if(File.Exists(_savePath))
+        if(File.Exists(Application.streamingAssetsPath + _savePath))
         {
             InventoryData invData = Saver.Load<InventoryData>(_savePath);
 

@@ -10,12 +10,14 @@ namespace JsonSaverLib
     {
         public static void Save<T>(string path, T obj)
         {
+            path = Application.streamingAssetsPath + path;
             var json = ToJson(obj);
             WriteAllText(path, json);
         }
 
         public static T Load<T>(string path)
         {
+            path = Application.streamingAssetsPath + path;
             var json = ReadAllText(path);
             return FromJson<T>(json);
         }
