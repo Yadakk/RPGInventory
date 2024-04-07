@@ -12,5 +12,6 @@ public class Bootstrap : MonoBehaviour
         RandomItemCreator.InitAll();
         ItemVoid.InitAll();
         Inventory.InitAll();
+        Tooltip.InitAll();
     }
 }

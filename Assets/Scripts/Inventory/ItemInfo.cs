@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ItemInfo : MonoBehaviour
+public class ItemInfo : MonoBehaviour, IPointerClickHandler, IPointerExitHandler
 {
     public ItemData Data;
 
@@ -48,5 +49,17 @@ public class ItemInfo : MonoBehaviour
                 _image.color = Color.yellow;
                 break;
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Tooltip.ToggleTooltipStatic("Name: " + Data.Name + '\n' +
+                                  "Damage: " + Data.Damage + '\n' +
+                                  "Rarity: " + Data.Rarity);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Tooltip.HideTooltipStatic();
     }
 }
