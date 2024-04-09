@@ -201,10 +201,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1615808579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -555, y: 1.9160156}
-  m_SizeDelta: {x: 790, y: 1050}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 360, y: 0}
+  m_SizeDelta: {x: 700, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316254286
 MonoBehaviour:
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _savePath: /inventory.json
-  _slots: 12
+  _slots: 9
   _slotPrefab: {fileID: 1224100980723730467, guid: 4e0f010a73058094384a5bfb29cf62e9, type: 3}
   _itemPrefab: {fileID: 2848993733925758329, guid: 8ccc1ef10f5ba934b860279caa33bf86, type: 3}
 --- !u!1 &347908926
