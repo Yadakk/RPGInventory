@@ -20,4 +20,12 @@ public class Slot : MonoBehaviour, IDropHandler
             itemInMouse.GetComponent<ItemDrag>().IsInsideSlot = true;
         }
     }
+
+    public void Insert(GameObject obj)
+    {
+        obj.GetComponent<RectTransform>().anchoredPosition = default;
+        obj.transform.SetParent(transform, false);
+        ItemInside = obj.GetComponent<ItemInfo>().Data;
+        obj.GetComponent<ItemDrag>().IsInsideSlot = true;
+    }
 }
